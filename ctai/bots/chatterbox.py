@@ -1,13 +1,25 @@
-import json, random
+import json, random, event
 from cantools import pubsub
 from cantools.util import log
 from aiio import Brain
 
 class ChatterBox(pubsub.Bot):
-	def __init__(self, server, channel, name=None):
+	def __init__(self, server, channel, name=None, delay=0, mood="random"):
 		pubsub.Bot.__init__(self, server, channel, name)
 		self.channel = channel
-		self.brain = Brain(name, retorts=False)
+		self.delay = delay
+		self.brain = Brain(name, mood=mood)
+
+	def _pub(self, msg):
+		self.server.publish({
+			"message": {
+				"action": "say",
+				"data": {
+					"message": msg
+				}
+			},
+			"channel": self.channel.name
+		}, self)
 
 	def on_publish(self, data):
 		log("ChatterBox received publish: %s"%(json.dumps(data),))
@@ -22,12 +34,4 @@ class ChatterBox(pubsub.Bot):
 		log("processing message: %s"%(msg,))
 		resp = self.brain(msg)
 		if resp:
-			self.server.publish({
-				"message": {
-					"action": "say",
-					"data": {
-						"message": resp
-					}
-				},
-				"channel": self.channel.name
-			}, self)
+			event.timeout(self.delay, self._pub, resp)
