@@ -11,7 +11,7 @@ randos = [
 ]
 
 def response():
-	brain = getBrain(random.choice(randos), fallback=True)
+	brain = getBrain(config.brain or random.choice(randos), fallback=True)
 	statement = cgi_get("statement")
 	succeed(brain(statement))
 
