@@ -11,8 +11,9 @@ randos = [
 ]
 
 def response():
-	brain = getBrain(config.brain or random.choice(randos), fallback=True)
-	statement = cgi_get("statement")
-	succeed(brain(statement))
+	idef = config.brain or random.choice(randos)
+	identity = cgi_get("identity", default=idef)
+	brain = getBrain(identity, fallback=True)
+	succeed(brain(cgi_get("statement")))
 
 respond(response)
