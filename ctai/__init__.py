@@ -1,1 +1,1 @@
-import init
+from . import init
