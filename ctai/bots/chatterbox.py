@@ -4,11 +4,11 @@ from cantools.util import log
 from aiio import Brain
 
 class ChatterBox(pubsub.Bot):
-	def __init__(self, server, channel, name=None, delay=0, vibe="random", mood=None):
+	def __init__(self, server, channel, name=None, delay=0, vibe="random", mood=None, options=None):
 		pubsub.Bot.__init__(self, server, channel, name)
 		self.channel = channel
 		self.delay = delay
-		self.brain = Brain(name, vibe=vibe, mood=mood)
+		self.brain = Brain(name, vibe=vibe, mood=mood, options=None)
 
 	def _pub(self, msg):
 		self.server.publish({

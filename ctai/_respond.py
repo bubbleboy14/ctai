@@ -12,9 +12,8 @@ randos = [
 
 def response():
 	idef = config.brain or random.choice(randos)
-	identity = cgi_get("identity", default=idef)
-	brain = getBrain(identity, vibe=cgi_get("vibe", default="all"),
-		mood=cgi_get("mood", required=False), fallback=True)
+	brain = getBrain(cgi_get("identity", default=idef), vibe=cgi_get("vibe", default="all"),
+		mood=cgi_get("mood", required=False), options=cgi_get("options", required=False))
 	succeed(brain(cgi_get("statement")))
 
 respond(response)
