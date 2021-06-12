@@ -13,7 +13,8 @@ randos = [
 def response():
 	idef = config.brain or random.choice(randos)
 	identity = cgi_get("identity", default=idef)
-	brain = getBrain(identity, fallback=True)
+	brain = getBrain(identity, vibe=cgi_get("vibe", default="all"),
+		mood=cgi_get("mood", required=False), fallback=True)
 	succeed(brain(cgi_get("statement")))
 
 respond(response)
