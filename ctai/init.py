@@ -1,4 +1,4 @@
-dirs = ["bots"]
+dirs = ["bots", "brains"]
 syms = {
 	".": ["_respond.py"],
 	"bots": ["chatterbox.py"]
