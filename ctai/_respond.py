@@ -1,7 +1,7 @@
 import random
 from aiio import getBrain
-from cantools.web import respond, succeed, fail, cgi_get
-from cantools import config, util
+from cantools.web import respond, succeed, cgi_get
+from cantools import config
 
 randos = [
 	"Arnold Schwarzeneggar",
